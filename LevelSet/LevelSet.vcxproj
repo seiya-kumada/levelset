@@ -63,6 +63,9 @@
     <ClInclude Include="test\Surface.h" />
     <ClInclude Include="test\TestUtilities.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="doc\readme.md" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

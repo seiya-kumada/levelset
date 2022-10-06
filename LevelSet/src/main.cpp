@@ -105,11 +105,11 @@ namespace {
         //============================================================================================================================================
                 int x, y, r;
                 get_loop_parameters(&x, &y, &r, vm);
-
+                
                 const string file_path = vm.count("input") ? vm["input"].as<string>() : "";
                 gray8_image_t img;
                 read_image(file_path, img, jpeg_tag{});
-
+                
                 vector<double> buffer;
                 copy(const_view(img).begin(), const_view(img).end(), back_inserter(buffer));
 
@@ -143,7 +143,6 @@ namespace {
 //====================================================================================================================================================
 int main(int argc, char* argv[]) {
 //====================================================================================================================================================
-        std::cout << argv[0] << std::endl;
         try {
                 options_description desc("allowed options");
                 desc.add_options()

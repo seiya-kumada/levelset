@@ -141,4 +141,7 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="doc\readme.md" />
+  </ItemGroup>
 </Project>

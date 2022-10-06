@@ -1,12 +1,14 @@
 //------------------------------------------------------------------------------------------------------------------------------------
 #include "TestUtilities.h"
 #include "Front.h"
+#include <string>
 #include <cmath>
 #include <fstream>
 #include "Error.h"
 #include "Ellipse.h"
 #include <stdexcept>
 #include <boost/gil/image_view_factory.hpp>
+#include <boost/gil/extension/io/jpeg.hpp>
 #include <boost/gil/typedefs.hpp>
 #include <boost/algorithm/minmax_element.hpp>
 #include <boost/tokenizer.hpp>
@@ -145,8 +147,7 @@ bool TestUtilities::write_buffer(const string& folder_path, const vector<double>
         vector<unsigned char> tmp1(tmp0.size());
         transform(tmp0.begin(), tmp0.end(), tmp1.begin(), reduce_pixel(*r.first, *r.second));
         gray8c_view_t v = interleaved_view(w, h, (gray8c_pixel_t*)&tmp1[0], w);
-        //kumada comment out
-        //jpeg_write_view(folder_path + "/modified.jpg", v);
+        gil::write_view(folder_path + "/modified.jpg", v, jpeg_tag{});
         return true;
 }
 
@@ -245,17 +246,16 @@ bool TestUtilities::write_intermediate_fronts(
 
 ) {
 //====================================================================================================================================
-        //show_debug("TestUtilities::write_intermediate_fronts");
-        //kumada all comment out!
-//        gray8_image_t img(v.dimensions());
-//        copy_pixels(v, view(img));
-//        Fronts::const_iterator beg = fronts.begin();
-//        Fronts::const_iterator end = fronts.end();
-//        while ( beg != end ) {
-//                write_intermediate_front(view(img), *beg, color);
-//                ++beg;
-//        }
-//        jpeg_write_view(folder_path + "/front_" + lexical_cast<string>(count) + ".jpg", const_view(img));
+        show_debug("TestUtilities::write_intermediate_fronts");
+        gray8_image_t img(v.dimensions());
+        copy_pixels(v, view(img));
+        Fronts::const_iterator beg = fronts.begin();
+        Fronts::const_iterator end = fronts.end();
+        while ( beg != end ) {
+                write_intermediate_front(view(img), *beg, color);
+                ++beg;
+        }
+        write_view(folder_path + "/front_" + lexical_cast<string>(count) + ".jpg", const_view(img), jpeg_tag{});
         return true;
 }
 
@@ -477,12 +477,11 @@ void TestUtilities::read_parameters(ifstream& ifs, Parameters* parameters, int w
 void TestUtilities::read_image(int* w, int* h, vector<double>& image, const char* file_name) {
 //====================================================================================================================================
         show_debug("TestUtilities::read_image");
-        //kumada all comment out!
-//        gray8_image_t img;
-//        jpeg_read_image(file_name, img);
-//        copy(const_view(img).begin(), const_view(img).end(), back_inserter(image));
-//        *w = static_cast<int>(img.width());
-//        *h = static_cast<int>(img.height());
+        gray8_image_t img;
+        gil::read_image(file_name, img, jpeg_tag{});
+        copy(const_view(img).begin(), const_view(img).end(), back_inserter(image));
+        *w = static_cast<int>(img.width());
+        *h = static_cast<int>(img.height());
 }
 
 #if 0

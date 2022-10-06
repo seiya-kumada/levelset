@@ -119,7 +119,7 @@ void LevelSetMethod::run(
         progress_display pd(upper_count);
 
         while ( upper_count >= count ) {
-
+                
                 // develope the current buffer into next buffer
                 EvolutionEquationSolver::evolve(
                         next_distance_ptr,
