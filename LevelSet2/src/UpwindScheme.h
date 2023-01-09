@@ -3,6 +3,7 @@
 
 #include "NeighboringPoints.h"
 #include "Indexer.h"
+#include <iostream>
 
 namespace lsm
 {
@@ -65,69 +66,69 @@ namespace lsm
                                 );
                 }
 
-                template<typename U>
-                void calculate_(const IntPoint<D>& p, TwoDimension)
-                {
-                        set_position(p);
-                        calculate_with_2d(U());
-                        upwind_scheme_difference_ =
-                                std::sqrt(
-                                          fdxm_ * fdxm_
-                                        + fdxp_ * fdxp_
-                                        + fdym_ * fdym_
-                                        + fdyp_ * fdyp_
-                                );
-                        
-                        calculate_central_difference_with_2d(); 
-                        central_difference_ = std::sqrt(dx_ * dx_ + dy_ * dy_);
-                }
+                //template<typename U>
+                //void calculate_(const IntPoint<D>& p, TwoDimension)
+                //{
+                //        set_position(p);
+                //        calculate_with_2d(U());
+                //        upwind_scheme_difference_ =
+                //                std::sqrt(
+                //                          fdxm_ * fdxm_
+                //                        + fdxp_ * fdxp_
+                //                        + fdym_ * fdym_
+                //                        + fdyp_ * fdyp_
+                //                );
+                //        
+                //        calculate_central_difference_with_2d(); 
+                //        central_difference_ = std::sqrt(dx_ * dx_ + dy_ * dy_);
+                //}
 
                 
-                void calculate_only_central_difference(const IntPoint<D>& p, TwoDimension)
-                {
-                        set_position(p);
-                        upwind_scheme_difference_ = 0;
-                        calculate_central_difference_with_2d(); 
-                        central_difference_ = std::sqrt(dx_ * dx_ + dy_ * dy_);
-                }
+                //void calculate_only_central_difference(const IntPoint<D>& p, TwoDimension)
+                //{
+                //        set_position(p);
+                //        upwind_scheme_difference_ = 0;
+                //        calculate_central_difference_with_2d(); 
+                //        central_difference_ = std::sqrt(dx_ * dx_ + dy_ * dy_);
+                //}
 
-                template<typename U>
-                void calculate_(const IntPoint<D>& p, ThreeDimension)
-                {
-                        set_position(p);
-                        calculate_with_3d(U());
-                        upwind_scheme_difference_ =
-                                std::sqrt(
-                                          fdxm_ * fdxm_
-                                        + fdxp_ * fdxp_
-                                        + fdym_ * fdym_
-                                        + fdyp_ * fdyp_
-                                        + fdzp_ * fdzp_
-                                        + fdzm_ * fdzm_
-                                );
-                        
-                        calculate_central_difference_with_3d(); 
-                        central_difference_ = std::sqrt(dx_ * dx_ + dy_ * dy_ + dz_ * dz_);
-                }
+                //template<typename U>
+                //void calculate_(const IntPoint<D>& p, ThreeDimension)
+                //{
+                //        set_position(p);
+                //        calculate_with_3d(U());
+                //        upwind_scheme_difference_ =
+                //                std::sqrt(
+                //                          fdxm_ * fdxm_
+                //                        + fdxp_ * fdxp_
+                //                        + fdym_ * fdym_
+                //                        + fdyp_ * fdyp_
+                //                        + fdzp_ * fdzp_
+                //                        + fdzm_ * fdzm_
+                //                );
+                //        
+                //        calculate_central_difference_with_3d(); 
+                //        central_difference_ = std::sqrt(dx_ * dx_ + dy_ * dy_ + dz_ * dz_);
+                //}
 
                 
-                void calculate_only_central_difference(const IntPoint<D>& p, ThreeDimension)
-                {
-                        set_position(p);
-                        upwind_scheme_difference_ = 0;
-                        calculate_central_difference_with_3d(); 
-                        central_difference_ = std::sqrt(dx_ * dx_ + dy_ * dy_ + dz_ * dz_);
-                }
+                //void calculate_only_central_difference(const IntPoint<D>& p, ThreeDimension)
+                //{
+                //        set_position(p);
+                //        upwind_scheme_difference_ = 0;
+                //        calculate_central_difference_with_3d(); 
+                //        central_difference_ = std::sqrt(dx_ * dx_ + dy_ * dy_ + dz_ * dz_);
+                //}
 
-                const double& get_central_difference() const
-                {
-                        return central_difference_;
-                }
+                //const double& get_central_difference() const
+                //{
+                //        return central_difference_;
+                //}
 
-                const double& get_upwind_scheme_difference() const
-                {
-                        return upwind_scheme_difference_;
-                }
+                //const double& get_upwind_scheme_difference() const
+                //{
+                //        return upwind_scheme_difference_;
+                //}
 
         private:
                 int left_;
@@ -147,12 +148,12 @@ namespace lsm
                 double fdzp_;
 
                 /// central difference
-                double dx_;
-                double dy_;
-                double dz_;
+                //double dx_;
+                //double dy_;
+                //double dz_;
 
-                double central_difference_;
-                double upwind_scheme_difference_;
+                //double central_difference_;
+                //double upwind_scheme_difference_;
 
                 // test ok
                 void set_position(const IntPoint<TwoDimension>& p)
@@ -193,11 +194,11 @@ namespace lsm
                         fdym_ = std::min(phi_[self_]   - phi_[top_],    0.0);
                 }
 
-                void calculate_central_difference_with_2d()
-                {
-                        dx_ = 0.5 * (phi_[right_]  - phi_[left_]);
-                        dy_ = 0.5 * (phi_[bottom_] - phi_[top_]);
-                }
+                //void calculate_central_difference_with_2d()
+                //{
+                //        dx_ = 0.5 * (phi_[right_]  - phi_[left_]);
+                //        dy_ = 0.5 * (phi_[bottom_] - phi_[top_]);
+                //}
                 
                 void calculate_with_3d(PositiveSpeed)
                 {
@@ -213,11 +214,11 @@ namespace lsm
                         fdzm_ = std::min(phi_[self_] - phi_[front_],    0.0);
                 }
          
-                void calculate_central_difference_with_3d()
-                {
-                        calculate_central_difference_with_2d();
-                        dz_ = 0.5 * (phi_[back_] - phi_[front_]);
-                }
+                //void calculate_central_difference_with_3d()
+                //{
+                //        calculate_central_difference_with_2d();
+                //        dz_ = 0.5 * (phi_[back_] - phi_[front_]);
+                //}
                 
                 UpwindScheme(const UpwindScheme&) = delete;
                 UpwindScheme& operator=(const UpwindScheme&) = delete;

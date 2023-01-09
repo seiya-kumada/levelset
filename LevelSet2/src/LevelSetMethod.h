@@ -195,11 +195,11 @@ namespace lsm
 
                         // a
                         boost::for_each(narrow_band_, //!!
-                                [&](const IntPoint<D>& p)
-                                {
-                                        const int index = indexer_(p);
-                                        phi_[index] -= dphi_[index];
-                                }
+                            [&](const IntPoint<D>& p)
+                            {
+                                 const int index = indexer_(p);
+                                 phi_[index] -= dphi_[index];
+                            }
                         );
                 }
                 
