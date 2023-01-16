@@ -535,25 +535,21 @@ namespace
                 double fs = LevelSetMethodTester::set_speed_on_front(lsm);
                 //std::cout << "fs = " << fs << std::endl;
 //                display_buffer<double, double>(size, speed);
+
                 BOOST_CHECK(fs != 0.0); 
-                for ( int j = 0, wj = j * size.width_; j < size.height_; ++j, j += size.width_ ) {
+                for (int j = 0; j < size.height_; ++j) {
+                        int wj = size.width_ * j;
                         const double* p = &speed[wj];
-                        //std::cout << "p = " << p << std::endl;
                         for ( int i = 0; i < size.width_; ++i ) {
-                                if ( i == left && j == top ) {
+                                if ( left <= i && i <= right && j == top ) {
                                         BOOST_CHECK(p[i] != 0.0);
-                                } else if ( left < i && i <= right && j == top ) {
+                                } else if ( left <= i && i <= right && j == bottom ) {
                                         BOOST_CHECK(p[i] != 0.0);
-                                } else if ( i == right && top <= j && j < bottom ) {
-                                        BOOST_CHECK(p[i] != 0.0);
-                                } else if ( i == right && j == bottom ) {
-                                        BOOST_CHECK(p[i] != 0.0);
-                                } else if ( left <= i && i < right && j == top ) {
+                                } else if ( i == right && top <= j && j <= bottom ) {
                                         BOOST_CHECK(p[i] != 0.0); 
-                                } else if ( i == left && top < j && top <= bottom ) {
+                                } else if ( i == left && top <= j && j <= bottom ) {
                                         BOOST_CHECK(p[i] != 0.0); 
                                 } else {
-                                        //std::cout << "i = " << i << std::endl;
                                         BOOST_CHECK(p[i] == 0);
                                 }
                         }
