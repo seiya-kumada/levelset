@@ -872,20 +872,16 @@ namespace
                 bool is_stopped = lsm.set_speed_function(resets);
                 const auto& speed = LevelSetMethodTester::get_speed(lsm);
                 BOOST_CHECK(!is_stopped);
-                for ( int j = 0, wj = j * size.width_; j < size.height_; ++j, j += size.width_ ) {
+                for ( int j = 0, wj = j * size.width_; j < size.height_; ++j, wj += size.width_ ) {
                         const double* p = &speed[wj];
                         for ( int i = 0; i < size.width_; ++i ) {
-                                if ( i == left && j == top ) {
+                                if ( left <= i && i <= right && j == top ) {
                                         BOOST_CHECK(p[i] != 0.0);
-                                } else if ( left < i && i <= right && j == top ) {
+                                } else if ( left <= i && i <= right && j == bottom ) {
                                         BOOST_CHECK(p[i] != 0.0);
-                                } else if ( i == right && top <= j && j < bottom ) {
-                                        BOOST_CHECK(p[i] != 0.0);
-                                } else if ( i == right && j == bottom ) {
-                                        BOOST_CHECK(p[i] != 0.0);
-                                } else if ( left <= i && i < right && j == top ) {
+                                } else if ( i == right && top <= j && j <= bottom ) {
                                         BOOST_CHECK(p[i] != 0.0); 
-                                } else if ( i == left && top < j && top <= bottom ) {
+                                } else if ( i == left && top <= j && j <= bottom ) {
                                         BOOST_CHECK(p[i] != 0.0); 
                                 } else {
                                         BOOST_CHECK(p[i] == 0);
@@ -1704,7 +1700,7 @@ namespace
 
         void test_2d()
         {
-                //std::cout << "2d\n";
+                std::cout << "2d\n";
                 test_front_2d();
                 test_initialize_along_front_2d();
                 test_initialize_over_all_2d();
@@ -1720,7 +1716,7 @@ namespace
 
         void test_3d()
         {
-                //std::cout << "3d\n";
+                std::cout << "3d\n";
                 test_front_3d();
                 test_initialize_along_front_3d();
                 test_initialize_over_all_3d();
